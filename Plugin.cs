@@ -33,7 +33,7 @@ namespace MadBro.QuestExpMultiplier
             try
             {
 
-                (multiplier, message) = NormalizeMultiplier(modUtils.ModConfig.Multiplier);
+                (multiplier, message) = NormalizeMultiplier(modUtils.ModConfig);
 
                 var quests = databaseServer.GetTables().Templates.Quests;
                 foreach ((_, var quest) in quests)
@@ -66,11 +66,12 @@ namespace MadBro.QuestExpMultiplier
             return Task.CompletedTask;
         }
 
-        private static (float, string?) NormalizeMultiplier(float multiplier)
+        private static (float, string?) NormalizeMultiplier(ModConfig config)
         {
+            float multiplier = config.Multiplier;
             if (multiplier <= 0)
                 return (0.1f, "Multiplier cannot be less than or equal to 0. Setting to 0.1.");
-            if (multiplier > 10)
+            if (multiplier > 10 && !config.IgnoreUpperLimit)
                 return (10f, "Multiplier cannot be greater than 10. Setting to 10.");
             return (multiplier, null);
         }

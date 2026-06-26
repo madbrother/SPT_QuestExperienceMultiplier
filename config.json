@@ -1,3 +1,4 @@
 {
-  "Multiplier": 0.5
+  "Multiplier": 0.5,
+  "IgnoreUpperLimit" : false
 }
